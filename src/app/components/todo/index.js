@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import './index.css';
-import vector from '../../assets/Vector.svg'
+import add from '../../assets/add.svg';
+import edit from '../../assets/edit.svg';
+import remove from '../../assets/remove.svg';
 import { apiUrl } from "../../constants/urls";
+import Popup from "../popup";
+
 
 
 class TodoComponent extends Component {
@@ -10,9 +14,16 @@ class TodoComponent extends Component {
         this.state = {
             isLoaded: false,
             error: null,
-            tasks: []
+            tasks: [],
+            seen: false
         }
     }
+
+    togglePop = () => {
+        this.setState({
+         seen: !this.state.seen
+        });
+       };
 
     async componentDidMount() {
         const response = await fetch(`${apiUrl}/tasks`);
@@ -33,7 +44,7 @@ class TodoComponent extends Component {
             <div className="todo-main">
                 <header>
                     <div className="title">To Do</div>
-                    <button className="add-button"><img src={vector} /></button>
+                    <button className="add-button" onClick= {this.togglePop}><img src={add} />{this.state.seen ? <Popup toggle={this.togglePop} /> : null}</button>
                 </header>
                 <main>
                     <div className="tasks">
@@ -42,7 +53,9 @@ class TodoComponent extends Component {
                             <div key={task.id} task={task} className="task-container">
                                 <div className="title-wrapper">
                                     <div className="task-title">{task.title}</div>
-                                    </div>
+                                    <div className="task-buttons"><button className="button"><img src={edit} /></button>
+                                        <button className="button"><img src={remove} /></button></div>
+                                </div>
                                 <div className="goal-wrapper">
                                     <p>{task.goal}</p>
                                 </div>
@@ -60,14 +73,3 @@ class TodoComponent extends Component {
     }
 }
 export default TodoComponent;
-
-{/* <div > 
-                <ul>
-                    {this.state.users.map(user => (
-                        <div key={user.id}> 
-                        <li>{user.firstName}, {user.age}</li>
-                        <button onClick = {()=>this.delete(user.id)}>Delete</button>
-                        </div>
-                    ))}
-                </ul>
-            </div> */}
