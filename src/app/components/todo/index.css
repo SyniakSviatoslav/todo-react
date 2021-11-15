@@ -29,3 +29,35 @@ line-height: 24px;
     background-color: white;
 }
 
+.tasks{
+    margin-top: 60px;
+}
+
+.task-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+align-items: center;
+    padding: 25px;
+    background-color: #DBEDF3;
+    border-radius: 20px;
+    margin-bottom: 41px;
+    max-width: 568px;
+    max-height: 147px;
+    
+}
+
+.title-wrapper{
+    display: flex;
+    padding-bottom: 12px;
+    font-style: normal;
+font-weight: bold;
+font-size: 16px;
+line-height: 20px;
+}
+
+.goal-wrapper{
+font-weight: 400;
+font-size: 14px;
+line-height: 150%;
+}
