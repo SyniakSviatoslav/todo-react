@@ -19,7 +19,10 @@ class TodoComponent extends Component {
         }
     }
 
-    togglePop = () => {
+    
+
+    togglePop = (event) => {
+        console.log("fuck")
         this.setState({
          seen: !this.state.seen
         });
@@ -32,6 +35,20 @@ class TodoComponent extends Component {
         this.setState({ tasks: tasks, isLoaded: true })
     }
 
+    delete = (id) => {
+        let tasks = []
+        fetch(`${apiUrl}/tasks/` + id, {
+            method: 'DELETE',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify(tasks)
+
+        })
+        
+    }
+
+
+
+    
     render() {
 
         const { error, tasks, isLoaded } = this.state;
@@ -44,7 +61,8 @@ class TodoComponent extends Component {
             <div className="todo-main">
                 <header>
                     <div className="title">To Do</div>
-                    <button className="add-button" onClick= {this.togglePop}><img src={add} />{this.state.seen ? <Popup toggle={this.togglePop} /> : null}</button>
+                    <button className="add-button" onClick= {this.togglePop} ><img src={add} /></button>
+                    {this.state.seen ? <Popup toggle={this.togglePop} /> : null}
                 </header>
                 <main>
                     <div className="tasks">
@@ -54,7 +72,7 @@ class TodoComponent extends Component {
                                 <div className="title-wrapper">
                                     <div className="task-title">{task.title}</div>
                                     <div className="task-buttons"><button className="button"><img src={edit} /></button>
-                                        <button className="button"><img src={remove} /></button></div>
+                                        <button className="button" onClick = {()=>this.delete(task.id)}><img src={remove} /></button></div>
                                 </div>
                                 <div className="goal-wrapper">
                                     <p>{task.goal}</p>
