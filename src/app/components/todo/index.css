@@ -36,10 +36,18 @@ line-height: 24px;
 }
 
 .tasks{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     margin-top: 60px;
+    padding-left: 130px;
+    padding-right: 130px;
+    flex-wrap: wrap-reverse;
 }
 
 .task-container{
+    
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
@@ -48,6 +56,8 @@ line-height: 24px;
     background-color: #DBEDF3;
     border-radius: 20px;
     margin-bottom: 41px;
+    width: 568px;
+    height: 147px;
     max-width: 568px;
     max-height: 147px;
     
@@ -100,6 +110,13 @@ background-color: rgba(43, 41, 41, 0.4);
     border-radius: 20px;
   }
 
+  form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   .content-wrapper{
       display: flex;
       flex-direction: column;
@@ -112,6 +129,7 @@ background-color: rgba(43, 41, 41, 0.4);
     font-weight: 800;
     font-size: 24px;
     line-height: 24px;
+    margin-bottom: 20px;
   }
 
   .inputTitle{

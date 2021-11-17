@@ -38,26 +38,40 @@ class Popup extends Component {
 
     }
 
+    editSubmit(id){
+        
+        let task = {
+                title: "dfs",
+                goal: "wdwef"
+            }
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ task: task})
+        };
+        fetch(`${apiUrl}/tasks/` + id, requestOptions)
+            .then(response => response.json())
+            .then(task => this.setState({ task: task }));
+    
+    }
     
      
-    // handleClick = () => {
-    //     this.props.toggle();
-    //   };
-
-
-    // = {()=>this.delete(user.id)}
-    // handleClick = () => {
-    //     this.props.toggle();
-    // };
     render() {
+        console.log(this.props)
+        let add = this.handleSumbit;
+        let edit = this.editSubmit;
+        
+        
+        // {this.state.seen.add ? <Popup toggle={this.togglePop} title={"create the new task"} /> : null}
+
         return (
             <div className="modal">
 
                 <div className="modal_content">
-                    <form onSubmit={(this.handleSumbit)}>
-                        <div className="popupTitle">Create a task</div>
+                    <form onSubmit={this.props.edit ? add : edit}>
+                        <div className="popupTitle">{this.props.title}</div>
                         <div className="content-wrapper">
-                            <div className="inputTitle">Title</div>
+                            <div className="inputTitle">Task</div>
                             <input placeholder="Type the title" className="titleInput" name="title" value={this.state.title} onChange={(this.handleTitleChange)}></input>
                             <div className="inputTitle">Desciption</div>
                             <input placeholder="Type the desciption" className="descriptionInput" name="goal" value={this.state.goal} onChange={(this.handleGoalChange)}></input>
