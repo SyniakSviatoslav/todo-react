@@ -10,6 +10,7 @@ class Popup extends Component {
         this.handleSumbit = this.handleSumbit.bind(this)
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleGoalChange = this.handleGoalChange.bind(this);
+        this.editSubmit = this.editSubmit.bind(this);
     }
 
     handleTitleChange (event){
@@ -27,7 +28,7 @@ class Popup extends Component {
             title: this.state.title,
             goal: this.state.goal
         }
-        console.log(tasks)
+       
         fetch(`${apiUrl}/tasks`, {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
@@ -38,26 +39,36 @@ class Popup extends Component {
 
     }
 
-    editSubmit(id){
-        
+    editSubmit(event){
+        event.preventDefault();
+        alert('The task has been edited');
         let task = {
-                title: "dfs",
-                goal: "wdwef"
+            title: this.state.title,
+            goal: this.state.goal
             }
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ task: task})
-        };
-        fetch(`${apiUrl}/tasks/` + id, requestOptions)
-            .then(response => response.json())
-            .then(task => this.setState({ task: task }));
+
+            fetch(`${apiUrl}/tasks/2`, {
+                method: 'PUT',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify({title: this.state.title, goal: this.state.goal })
+    
+            })
+        // const requestOptions = {
+        //     method: 'PUT',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ task})
+        // };
+        // fetch(`${apiUrl}/tasks/1`, requestOptions)
+        //     .then(response => response.json())
+        //     // .then(task => this.setState({ title: this.state.title }));
+        //     console.log(task)
     
     }
     
+    
      
     render() {
-        console.log(this.props)
+        
         let add = this.handleSumbit;
         let edit = this.editSubmit;
         

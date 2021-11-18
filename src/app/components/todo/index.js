@@ -107,7 +107,7 @@ class TodoComponent extends Component {
                                     <div className="task-title">{task.title}
                                     </div>
                                     <div className="task-buttons">
-                                        <button className="button"  onClick={() => this.editPop(task.id)} ><img src={edit} />
+                                        <button className="button"  onClick={() => this.editPop()} ><img src={edit} />
                                         
                                         </button>
                                         {this.state.seen.edit ? <Popup toggle={this.editPop} title={"Edit a task"} /> : null}
