@@ -5,6 +5,7 @@ import editIcon from "../../assets/edit.svg";
 import removeIcon from "../../assets/remove.svg";
 import { apiUrl } from "../../constants/urls";
 import Popup from "../popup";
+import Loader from "../loader";
 
 class TodoComponent extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class TodoComponent extends Component {
       isCreatePopupShown: false,
       taskToEdit: null,
     };
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   async componentDidMount() {
@@ -27,8 +29,10 @@ class TodoComponent extends Component {
   }
 
   toggleCreatePopup = () => {
+    
     this.setState((prevState) => ({
       isCreatePopupShown: !prevState.isCreatePopupShown,
+     
     }));
   };
 
@@ -46,7 +50,9 @@ class TodoComponent extends Component {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(tasks),
     });
+    this.setState(prevState => ({tasks: prevState.tasks.filter(task=>task.id != id)}))
   };
+
 
   render() {
     const {
@@ -59,7 +65,7 @@ class TodoComponent extends Component {
     } = this.state;
 
     if (error) return <p>{error}</p>;
-    if (!isLoaded) return <p>Loading ...</p>;
+    if (!isLoaded) return <Loader></Loader>;
 
     return (
       <div className="todo-main">
@@ -102,6 +108,7 @@ class TodoComponent extends Component {
           <Popup
             handleClose={this.toggleCreatePopup}
             popupTitle="Create a task"
+            update ={this.componentDidMount}
           />
         )}
 
@@ -111,6 +118,7 @@ class TodoComponent extends Component {
             popupTitle="Edit a task"
             isEditPopup={true}
             taskToEdit={taskToEdit}
+            update ={this.componentDidMount}
           />
         )}
       </div>

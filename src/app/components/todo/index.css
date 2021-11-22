@@ -81,10 +81,11 @@ main{
     background-color: #DBEDF3;
     border-radius: 20px;
     margin-bottom: 41px;
-    width: 500px;
+    width: 400px;
     /* height: 147px; */
-    max-width: 500px;
+    max-width: 400px;
     max-height: 147px;
+    
     text-overflow: ellipsis;
  overflow: hidden;
    

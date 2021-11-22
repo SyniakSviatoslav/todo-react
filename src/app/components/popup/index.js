@@ -7,6 +7,7 @@ class Popup extends Component {
     this.state = {
       title: props.isEditPopup ? props.taskToEdit.title : "",
       goal: props.isEditPopup ? props.taskToEdit.goal : "",
+      tasks: []
     };
   }
 
@@ -17,24 +18,43 @@ class Popup extends Component {
     this.setState({ goal: event.target.value });
   };
 
+  async componentDidMount() {
+    const response = await fetch(`${apiUrl}/tasks`);
+    const tasks = await response.json();
+
+    this.setState({ tasks: tasks });
+  }
+
    handleSumbit = async (event) => {
     event.preventDefault();
     const { title, goal } = this.state;
-    const { taskToEdit, handleClose } = this.props;
+    const { taskToEdit, handleClose, } = this.props;
 
     if (this.props.isEditPopup) {
-      // do edit, you have access to the task id by taskToEdit.id
-      console.log("edit");
+      const updatedTask = await fetch(`${apiUrl}/tasks/${taskToEdit.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: title, goal: goal })
+    })
+    
+     this.props.update()
       handleClose();
+
     } else {
-      // do creation
-      console.log("create");
+      const updatedTask = await fetch(`${apiUrl}/tasks`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: title, goal: goal })
+    })
+      
+      this.props.update()
       handleClose();
 
     }
   };
 
   render() {
+    
     const { popupTitle } = this.props;
     const { title, goal } = this.state;
 
