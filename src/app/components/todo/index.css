@@ -67,6 +67,7 @@ main{
   justify-content: space-between;
   /* align-items: center; */
   max-width: 100%;
+  width: 100%;
   margin-left: 130px;
   margin-right: 130px;
 }
@@ -123,6 +124,12 @@ top: -1px;
 
 background-color: rgba(43, 41, 41, 0.4);
   }
+
+
+  .blocker{
+    width: 100%;
+    height: 100%;
+}
   
   .modal_content {
     display: flex;

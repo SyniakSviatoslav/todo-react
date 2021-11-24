@@ -18,6 +18,8 @@ class Popup extends Component {
     this.setState({ goal: event.target.value });
   };
 
+   
+
   async componentDidMount() {
     const response = await fetch(`${apiUrl}/tasks`);
     const tasks = await response.json();
@@ -25,20 +27,20 @@ class Popup extends Component {
     this.setState({ tasks: tasks });
   }
 
-   handleSumbit = async (event) => {
+  handleSumbit = async (event) => {
     event.preventDefault();
     const { title, goal } = this.state;
-    const { taskToEdit, handleClose, } = this.props;
+    const { taskToEdit, handleClose, update } = this.props;
 
     if (this.props.isEditPopup) {
       const response = await fetch(`${apiUrl}/tasks/${taskToEdit.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: title, goal: goal })
-    })
-    const updatedTask = await response.json();
-    
-     this.props.update(updatedTask)
+      })
+      const updatedTask = await response.json();
+
+      update(updatedTask)
       handleClose();
 
     } else {
@@ -46,22 +48,23 @@ class Popup extends Component {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: title, goal: goal })
-    })
-    const newTask = await response.json();
-      
-      this.props.update(newTask);
+      })
+      const newTask = await response.json();
+
+      update(newTask);
       handleClose();
 
     }
   };
 
   render() {
-    
-    const { popupTitle } = this.props;
+
+    const { popupTitle, handleClose } = this.props;
     const { title, goal } = this.state;
 
     return (
-      <div className="modal">
+      <div className="modal" >
+        <div className="blocker" onClick={handleClose}></div>
         <div className="modal_content">
           <form onSubmit={this.handleSumbit}>
             <div className="popupTitles">{popupTitle}</div>

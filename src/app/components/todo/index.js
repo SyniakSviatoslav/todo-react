@@ -18,7 +18,7 @@ class TodoComponent extends Component {
       isCreatePopupShown: false,
       taskToEdit: null,
     };
-    
+
   }
 
   async componentDidMount() {
@@ -29,10 +29,10 @@ class TodoComponent extends Component {
   }
 
   toggleCreatePopup = () => {
-    
+
     this.setState((prevState) => ({
       isCreatePopupShown: !prevState.isCreatePopupShown,
-     
+
     }));
   };
 
@@ -43,6 +43,25 @@ class TodoComponent extends Component {
     }));
   };
 
+  closeOutsidePopup = () => {
+
+    if (this.state.isCreatePopupShown) {
+
+
+      this.setState((prevState) => ({
+        isCreatePopupShown: !prevState.isCreatePopupShown,
+
+      }));
+    }
+    if (this.state.isEditPopupShown){
+      this.setState((prevState) => ({
+        isEditPopupShown: !prevState.isEditPopupShown
+      }));
+    }
+  }
+
+  
+
   delete = (id) => {
     let tasks = [];
     const response = fetch(`${apiUrl}/tasks/` + id, {
@@ -50,15 +69,15 @@ class TodoComponent extends Component {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(tasks),
     });
-    this.setState(prevState => ({tasks: prevState.tasks.filter(task=>task.id != id)}))
+    this.setState(prevState => ({ tasks: prevState.tasks.filter(task => task.id != id) }))
   };
 
-  addTask = (task)=> {
-    this.setState(prevState => ({tasks: [...prevState.tasks, task]}))
+  addTask = (task) => {
+    this.setState(prevState => ({ tasks: [...prevState.tasks, task] }))
   }
 
-  editTask = (task)=> {
-    this.setState(prevState => ({tasks: prevState.tasks.map(oldTask => oldTask.id === task.id ? {id: task.id, title: task.title, goal: task.goal } : oldTask ) }));
+  editTask = (task) => {
+    this.setState(prevState => ({ tasks: prevState.tasks.map(oldTask => oldTask.id === task.id ? { id: task.id, title: task.title, goal: task.goal } : oldTask) }));
 
   }
 
@@ -77,7 +96,7 @@ class TodoComponent extends Component {
     if (!isLoaded) return <Loader></Loader>;
 
     return (
-      <div className="todo-main">
+      <div className="todo-main" >
         <header>
           <div className="title">To Do</div>
           <button className="add-button" onClick={this.toggleCreatePopup}>
@@ -115,19 +134,19 @@ class TodoComponent extends Component {
         </div>
         {isCreatePopupShown && (
           <Popup
-            handleClose={this.toggleCreatePopup}
+            handleClose={this.closeOutsidePopup}
             popupTitle="Create a task"
-            update ={this.addTask}
+            update={this.addTask}
           />
         )}
 
         {isEditPopupShown && (
           <Popup
-            handleClose={this.toggleEditPopup}
+            handleClose={this.closeOutsidePopup}
             popupTitle="Edit a task"
             isEditPopup={true}
             taskToEdit={taskToEdit}
-            update = {this.editTask}
+            update={this.editTask}
           />
         )}
       </div>
