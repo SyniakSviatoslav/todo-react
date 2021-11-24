@@ -31,23 +31,25 @@ class Popup extends Component {
     const { taskToEdit, handleClose, } = this.props;
 
     if (this.props.isEditPopup) {
-      const updatedTask = await fetch(`${apiUrl}/tasks/${taskToEdit.id}`, {
+      const response = await fetch(`${apiUrl}/tasks/${taskToEdit.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: title, goal: goal })
     })
+    const updatedTask = await response.json();
     
-     this.props.update()
+     this.props.update(updatedTask)
       handleClose();
 
     } else {
-      const updatedTask = await fetch(`${apiUrl}/tasks`, {
+      const response = await fetch(`${apiUrl}/tasks`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: title, goal: goal })
     })
+    const newTask = await response.json();
       
-      this.props.update()
+      this.props.update(newTask);
       handleClose();
 
     }

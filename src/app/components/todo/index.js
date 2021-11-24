@@ -18,7 +18,7 @@ class TodoComponent extends Component {
       isCreatePopupShown: false,
       taskToEdit: null,
     };
-    this.componentDidMount = this.componentDidMount.bind(this);
+    
   }
 
   async componentDidMount() {
@@ -52,6 +52,15 @@ class TodoComponent extends Component {
     });
     this.setState(prevState => ({tasks: prevState.tasks.filter(task=>task.id != id)}))
   };
+
+  addTask = (task)=> {
+    this.setState(prevState => ({tasks: [...prevState.tasks, task]}))
+  }
+
+  editTask = (task)=> {
+    this.setState(prevState => ({tasks: prevState.tasks.map(oldTask => oldTask.id === task.id ? {id: task.id, title: task.title, goal: task.goal } : oldTask ) }));
+
+  }
 
 
   render() {
@@ -108,7 +117,7 @@ class TodoComponent extends Component {
           <Popup
             handleClose={this.toggleCreatePopup}
             popupTitle="Create a task"
-            update ={this.componentDidMount}
+            update ={this.addTask}
           />
         )}
 
@@ -118,7 +127,7 @@ class TodoComponent extends Component {
             popupTitle="Edit a task"
             isEditPopup={true}
             taskToEdit={taskToEdit}
-            update ={this.componentDidMount}
+            update = {this.editTask}
           />
         )}
       </div>
