@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./index.css";
 import { apiUrl } from "../../constants/urls.js";
 
 class Popup extends Component {
@@ -18,7 +19,7 @@ class Popup extends Component {
     this.setState({ goal: event.target.value });
   };
 
-   
+
 
   async componentDidMount() {
     const response = await fetch(`${apiUrl}/tasks`);
