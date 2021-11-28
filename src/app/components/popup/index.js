@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./index.css";
 import { apiUrl } from "../../constants/urls.js";
 
+// creates Popup on click add or edit 
+
 class Popup extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +13,8 @@ class Popup extends Component {
       tasks: []
     };
   }
+   
+  // transferes value of input to state of Popup Component
 
   handleTitleChange = (event) => {
     this.setState({ title: event.target.value });
@@ -20,6 +24,7 @@ class Popup extends Component {
   };
 
 
+  // gets data from server
 
   async componentDidMount() {
     const response = await fetch(`${apiUrl}/tasks`);
@@ -27,6 +32,9 @@ class Popup extends Component {
 
     this.setState({ tasks: tasks });
   }
+
+  // pushes data from form to server to create a new task on click, if is invoked via add button
+  // pushes data from form to server to edit an old task on click, if is invoked via edit button
 
   handleSumbit = async (event) => {
     event.preventDefault();
@@ -57,6 +65,8 @@ class Popup extends Component {
 
     }
   };
+ 
+  // creates visual appereance with props from TodoComponent
 
   render() {
 

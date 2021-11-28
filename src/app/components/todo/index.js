@@ -7,6 +7,8 @@ import { apiUrl } from "../../constants/urls";
 import Popup from "../popup";
 import Loader from "../loader";
 
+// creates main component to render tasks with state for objects from server (tasks) and functions
+
 class TodoComponent extends Component {
   constructor(props) {
     super(props);
@@ -21,12 +23,16 @@ class TodoComponent extends Component {
 
   }
 
+  // gets data from server
+
   async componentDidMount() {
     const response = await fetch(`${apiUrl}/tasks`);
     const tasks = await response.json();
 
     this.setState({ tasks: tasks, isLoaded: true });
   }
+
+  // invokes Popup Component with possibility to post a new task on click
 
   toggleCreatePopup = () => {
 
@@ -35,6 +41,8 @@ class TodoComponent extends Component {
 
     }));
   };
+  
+  // invokes Popup Component with possibility to edit an old task on click
 
   toggleEditPopup = (task) => {
     this.setState((prevState) => ({
@@ -42,6 +50,8 @@ class TodoComponent extends Component {
       taskToEdit: task,
     }));
   };
+  
+  // closes Popup Component if clicked outside 
 
   closeOutsidePopup = () => {
 
@@ -60,7 +70,7 @@ class TodoComponent extends Component {
     }
   }
 
-  
+  // deletes a task from server and renders a page
 
   delete = (id) => {
     let tasks = [];
@@ -72,15 +82,20 @@ class TodoComponent extends Component {
     this.setState(prevState => ({ tasks: prevState.tasks.filter(task => task.id != id) }))
   };
 
+  // adds a new task to array of objects(tasks) in state of this component
+
   addTask = (task) => {
     this.setState(prevState => ({ tasks: [...prevState.tasks, task] }))
   }
+
+  // edits an old task to array of objects(tasks) in state of this component
 
   editTask = (task) => {
     this.setState(prevState => ({ tasks: prevState.tasks.map(oldTask => oldTask.id === task.id ? { id: task.id, title: task.title, goal: task.goal } : oldTask) }));
 
   }
 
+  // creates visual appereance with props for PopupComponent
 
   render() {
     const {

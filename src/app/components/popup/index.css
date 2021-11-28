@@ -99,4 +99,27 @@
     line-height: 150%;
   }
 
+  @media (max-width: 600px) {
+    .modal_content {
+      max-width: 380px;
+    } 
+    .titleInput{
+      width: 300px;
+     }
+    .descriptionInput{
+      width: 300px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .modal_content {
+        max-width: 240px;
+      } 
+      .titleInput{
+        width: 180px;
+       }
+      .descriptionInput{
+        width: 180px;
+        }
+      }
   
